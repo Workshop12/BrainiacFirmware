@@ -1,4 +1,3 @@
-#include <Serial>
 #include <SoftwareSerial.h> 
 
 #define RxD 2
