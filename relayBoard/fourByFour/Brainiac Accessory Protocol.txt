@@ -1,0 +1,63 @@
+Brainiac Accessory Protocol
+===========================
+
+> id - query the ID of this product
+    <product name> <product family> <version> <serial number>
+    4x4            relay            0.1       1423414243k1a
+
+Relay Protocol
+==============
+
+> enum - Enumerate the services offered by this devices.
+    <service:count>[ <service:count> ...]
+
+    Services:
+        Switch - a relay switch channel.
+        s - a relay switch channel.
+
+            Status
+
+                s:n <status> - Turn a realy on or off.
+                    status: 0 - off
+                    status: 1 - on
+
+            Timeout
+
+                s:n:t [timeout] - Set the maximum time that a relay will be on.
+                    timeout - The timeout in milliseconds. 0 (or no param) means no timeout.
+
+        d - a directed (reverse polarity) switch.
+
+            Status
+                d:n <status> - Choose the direction.
+                    status: 0 - off
+                    status: 1 - on - with Forward polarity
+                    status: 2 - on - with Reverse polarity. (reverse engages the direction relay)
+
+
+            Timeout
+
+                d:n:t <forwardTimeout,reverseTimeout> - Set the maximum time that a relay will be on.
+                    forwardTimeout - The timeout in milliseconds that forward current is on. 0 means no timeout.
+                    reverseTimeout - The timeout in milliseconds that reverse current is on. 0 means no timeout.
+
+        p - pwm output
+            Status
+                d:n <status> - Set PWM duty cycle
+                    status: 0 - 255 
+
+            Timeout
+
+                d:n:t [timeout]
+                    timeout - The timeout in milliseconds. 0 (or no param) means no timeout.
+
+> set [<service>[:<instance>[:<which>]]] - show settings for the given (or all) services
+    <service>:<instance>:<which> <value>
+        s:3 1
+        s:3:t 15000
+
+> set s - show all settings 
+
+
+
+
