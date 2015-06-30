@@ -17,7 +17,7 @@ const PStr command_set(_command_set);
 const char _error_pollables[] PROGMEM = "ERROR: Too many pollables for the given array size";
 const PStr error_pollables(_error_pollables);
 
-const char _string_prompt[] PROGMEM = "> ";
+const char _string_prompt[] PROGMEM = "$ ";
 const PStr string_prompt(_string_prompt);
 
 const char _product_details[] PROGMEM = "4x4 relay 1.0.0.0 ";
