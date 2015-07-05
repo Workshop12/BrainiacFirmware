@@ -4,25 +4,25 @@
 #include "RelayChannel.h"
 
 class PolarisedChannel : public RelayInterface {
-public:
-  PolarisedChannel();
-  virtual ~PolarisedChannel();
+  public:
+    PolarisedChannel();
+    virtual ~PolarisedChannel();
 
-  void setPins(uint8_t powerPin, uint8_t directionPin);
+    void setPins(uint8_t powerPin, uint8_t directionPin);
 
-  virtual uint8_t setState(uint8_t state);
-  virtual void poll(uint32_t now);
+    virtual uint8_t setState(uint8_t state);
+    virtual void poll(uint32_t now);
 
-protected:
-  virtual char getType();
-  
-  RelayChannel mDirectionChannel;
-  RelayChannel mPowerChannel;
+  protected:
+    virtual char getType();
 
-  uint32_t mNextStateChange;
+    RelayChannel mDirectionChannel;
+    RelayChannel mPowerChannel;
 
-private:
-  void progressStateMachine(uint32_t now);
+    uint32_t mNextStateChange;
+
+  private:
+    void progressStateMachine(uint32_t now);
 };
 
 #endif

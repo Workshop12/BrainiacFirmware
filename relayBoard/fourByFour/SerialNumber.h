@@ -4,8 +4,8 @@
 #include <Arduino.h>
 
 namespace SerialNumber {
-  void print();
-  void store(char * c, uint8_t length);
+void print();
+void store(char * c, uint8_t length);
 }
 
 #endif

@@ -4,8 +4,8 @@
 #include <Arduino.h>
 
 class Pollable {
-public:
-  virtual void poll(uint32_t now) = 0;
+  public:
+    virtual void poll(uint32_t now) = 0;
 };
 
 #endif

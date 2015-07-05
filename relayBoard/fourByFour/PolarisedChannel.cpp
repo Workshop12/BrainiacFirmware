@@ -5,7 +5,7 @@
 #define STATE_CHANGE_DELAY_MS 30
 
 PolarisedChannel::PolarisedChannel() {
-  
+
 }
 
 PolarisedChannel::~PolarisedChannel() {
@@ -24,7 +24,7 @@ uint8_t PolarisedChannel::setState(uint8_t state) {
     // (1+1)%2 = 0 +1 = 1
     // (2+1)%2 = 1 +1 = 2
     // (69+1)%2 = 0 + 1 = 1
-    state = (state+1)%2 + 1;
+    state = (state + 1) % 2 + 1;
   }
   if (state != mState) {
     mState = state;
@@ -50,16 +50,16 @@ void PolarisedChannel::progressStateMachine(uint32_t now) {
   uint8_t currentPower = mPowerChannel.getState();
   uint8_t currentDirection = mDirectionChannel.getState();
 
-//  Serial.print("Desired Power ");
-//  Serial.print(desiredPower);
-//  Serial.print(" Desired Direction: ");
-//  Serial.print(desiredDirection);
-//
-//  Serial.print(" Current Power: ");
-//  Serial.print(currentPower);
-//  Serial.print(" Current Direction: ");
-//  Serial.print(currentDirection);
-//  Serial.println();
+  //  Serial.print("Desired Power ");
+  //  Serial.print(desiredPower);
+  //  Serial.print(" Desired Direction: ");
+  //  Serial.print(desiredDirection);
+  //
+  //  Serial.print(" Current Power: ");
+  //  Serial.print(currentPower);
+  //  Serial.print(" Current Direction: ");
+  //  Serial.print(currentDirection);
+  //  Serial.println();
 
   boolean anotherChange = false;
 

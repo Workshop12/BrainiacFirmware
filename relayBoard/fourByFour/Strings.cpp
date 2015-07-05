@@ -66,7 +66,7 @@ bool PStr::equals(char * buffer, uint8_t length) const {
 }
 
 bool PStr::begins(char * buffer, uint8_t length) const {
-  for (uint8_t i=0; ; ++i) {
+  for (uint8_t i = 0; ; ++i) {
     char inConst = charAt(i);
     // Check end of this
     if (inConst == 0) {

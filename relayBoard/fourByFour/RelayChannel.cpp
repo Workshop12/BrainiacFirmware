@@ -37,19 +37,19 @@ uint32_t RelayInterface::getTimeout() {
 }
 
 void RelayInterface::showSet(uint8_t index) {
-    Serial.print(getType());
-    Serial.print(':');
-    Serial.print(index);
-    Serial.print(' ');
-    Serial.println(mState);
+  Serial.print(getType());
+  Serial.print(':');
+  Serial.print(index);
+  Serial.print(' ');
+  Serial.println(mState);
 
-    Serial.print(getType());
-    Serial.print(':');
-    Serial.print(index);
-    Serial.print(':');
-    Serial.print('t');
-    Serial.print(' ');
-    Serial.println(mTimeout);
+  Serial.print(getType());
+  Serial.print(':');
+  Serial.print(index);
+  Serial.print(':');
+  Serial.print('t');
+  Serial.print(' ');
+  Serial.println(mTimeout);
 }
 
 RelayChannel::RelayChannel() : mPowerPin(-1) {

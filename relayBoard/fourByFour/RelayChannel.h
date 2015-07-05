@@ -4,45 +4,45 @@
 #include "Pollable.h"
 
 class RelayInterface : public Pollable {
-public:
-  RelayInterface();
-  
-  void setTimeout(uint32_t timeout);
-  uint32_t getTimeout();
+  public:
+    RelayInterface();
 
-  
-  virtual uint8_t setState(uint8_t state) = 0;
-  uint8_t getState();
+    void setTimeout(uint32_t timeout);
+    uint32_t getTimeout();
 
-  virtual void poll(uint32_t now);
 
-  void showSet(uint8_t index);
+    virtual uint8_t setState(uint8_t state) = 0;
+    uint8_t getState();
 
-protected:
-  virtual char getType() = 0;
-  void setOffTime();
-  
-  uint32_t mTimeout;
-  uint32_t mOffTime;
-  uint8_t mState;
+    virtual void poll(uint32_t now);
+
+    void showSet(uint8_t index);
+
+  protected:
+    virtual char getType() = 0;
+    void setOffTime();
+
+    uint32_t mTimeout;
+    uint32_t mOffTime;
+    uint8_t mState;
 };
 
 class RelayChannel : public RelayInterface {
-public:
-  RelayChannel();
-  virtual ~RelayChannel();
+  public:
+    RelayChannel();
+    virtual ~RelayChannel();
 
-  void setPin(int8_t powerPin);
+    void setPin(int8_t powerPin);
 
-  virtual uint8_t setState(uint8_t state);
+    virtual uint8_t setState(uint8_t state);
 
-protected:
-  virtual char getType();
+  protected:
+    virtual char getType();
 
-  int8_t mPowerPin;
+    int8_t mPowerPin;
 
-private:
-  void releasePin();
+  private:
+    void releasePin();
 };
 
 #endif
