@@ -73,10 +73,10 @@ void setup() {
   directedChannels[2].setPins(8, 9);
   directedChannels[3].setPins(10, 11);
 
-  switchChannels[0].setPin(12);
-  switchChannels[1].setPin(13);
-  switchChannels[2].setPin(14);
-  switchChannels[3].setPin(15);
+  switchChannels[0].setPin(12); 
+  switchChannels[1].setPin(14); // Blinky is on 13.
+  switchChannels[2].setPin(15);
+  switchChannels[3].setPin(16);
 
   for (uint8_t i = 0; i < 4; ++i) {
     addPollable(&directedChannels[i]);
