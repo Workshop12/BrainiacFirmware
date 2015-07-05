@@ -89,7 +89,15 @@ void setup() {
   addPollable(&blinky);
   addPollable(&lineReader);
 
-  directedChannels[0].setPins(7, 8);
+  directedChannels[0].setPins(4,5);
+  directedChannels[1].setPins(6,7);
+  directedChannels[2].setPins(8,9);
+  directedChannels[3].setPins(10,11);
+
+  switchChannels[0].setPin(12);
+  switchChannels[1].setPin(13);
+  switchChannels[2].setPin(14);
+  switchChannels[3].setPin(15);
 
   for (uint8_t i = 0; i < 4; ++i) {
     addPollable(&directedChannels[i]);
@@ -235,208 +243,6 @@ private:
 
 StatementParser statementParser;
 
-// uint8_t doStatement2(char * buffer, uint8_t length) {
-//   char service = 0;
-//   uint8_t instance = 0;
-//   char subService = 0;
-
-//   uint32_t value = 0;
-//   bool valueValid = false;
-
-//   RelayInterface * toUse = NULL;
-
-//   uint8_t state = 0;
-//   for (uint8_t i=0; i<length; ++i) {
-//     char next = buffer[i];
-//     if (state == 0) {
-//       service = next;
-//       if (service != 's' && service != 'd') {
-//         return 1;
-//       }
-//       state = 1;
-//     } else if (state == 1) {
-//       if (next != ':') {
-//         return 2;
-//       } else {
-//         state == 2;
-//       }
-//     } else if (state == 2) {
-//       if (next <'0' || next >'9') {
-//         return 3;
-//       }
-//       instance = next - '0';
-
-//       if (service == 's' && instance >= SWITCH_CHANNEL_COUNT) {
-//         return 4;
-//       }
-//       if (service == 'd' && instance >= DIRECTED_CHANNEL_COUNT) {
-//         return 5;
-//       }
-
-//       if (service == 's') {
-//         toUse = &switchChannels[instance];
-//       }
-//       if (service == 'd') {
-//         toUse = &directedChannels[instance];
-//       }
-
-//       if (toUse == NULL) {
-//         return 6;
-//       }
-//       state = 3;
-//     } else if (state == 3) {
-//       if (next == ' ') {
-//         state = 4;
-//       } else if (next == ':') {
-//         state = 50;
-//       } else {
-//         return 7;
-//       }
-//     } else if (state == 4) {
-//       valueValid = parseInt(buffer+i,length-i,value);
-//       if (valueValid) {
-//         toUse->setState(value);
-//         Serial.println("OK");
-//       } else {
-//         return 8;
-//       }
-//     } else if (state==50) {
-//       subService = next;
-//       if (subService != 't') {
-//         return 9;
-//       }
-//       state = 51;
-//     } else if (state==51) {
-//       if (next == ' ') {
-//         state = 52;
-//       } else {
-//         return 10;
-//       }
-//     } else if (state==52) {
-//       valueValid = parseInt(vuffer+i,length-i,value);
-//       if (valueValid) {
-//         switch(subService) {
-//           case 't':
-//             toUse->setTimeout(value);
-//             break;
-//           default:
-//             return 11;
-//         }
-//       } else {
-//         return 12;
-//       }
-//     }
-//   }
-//   return 13;
-// }
-
-// uint8_t doStatement(char * buffer, uint8_t length) {
-//   uint8_t offset = 0;
-//   if (offset == length) {
-//     return 1;
-//   }
-
-//   char service = buffer[offset++];
-//   if (offset == length) {
-//     return 2;
-//   }
-//   if (service != 's' && service != 'd') {
-//     return 3;
-//   }
-//   char colon = buffer[offset++];
-//   if (colon != ':') {
-//     return 4;
-//   }
-//   if (offset == length) {
-//     return 5;
-//   }
-//   char instanceChar = buffer[offset++];
-//   int8_t instance = instanceChar - '0';
-
-//   if (instance < 0) {
-//     return 6;
-//   }
-//   if (service == 's' && instance >= SWITCH_CHANNEL_COUNT) {
-//     return 7;
-//   }
-//   if (service == 'd' && instance >= DIRECTED_CHANNEL_COUNT) {
-//     return 8;
-//   }
-
-//   RelayInterface * toUse = NULL;
-//   switch(service) {
-//     case 's':
-//       toUse = switchChannels[instance];
-//       break;
-//     case 'd':
-//       toUse = directedChannels[instance];
-//       break;
-//     default:
-//       return 17;
-//   }
-
-//   if (offset == length) {
-//     return 9;
-//   }
-//   colon = buffer[offset++];
-//   if (offset == length) {
-//     return 10;
-//   }
-//   if (colon == ' ') {
-//     uint32_t value;
-//     if (!parseInt(buffer + offset, length - offset, value)) {
-//       return 11;
-//     }
-//     uint8_t stateToPrint = toUse->setState(value);
-//     Serial.print(service);
-//     Serial.print(':');
-//     Serial.print(instance);
-//     Serial.print(' ');
-//     Serial.println(stateToPrint);
-//   } else if (colon == ':') {
-//     char subservice = buffer[offset++];
-//     if (subservice != 't') {
-//       return 12;
-//     }
-//     if (offset == length) {
-//       return 13;
-//     }
-//     char space = buffer[offset++];
-//     if (space != ' ') {
-//       return 14;
-//     }
-//     if (offset == length) {
-//       return 15;
-//     }
-
-//     uint32_t value;
-//     if (!parseInt(buffer+offset,length-offset,value)) {
-//       return 16;
-//     }
-
-//     switch(subservice) {
-//       case 't':
-//         toUse->setTimeout(value);
-//         break;
-//       deafult:
-//         return 18;
-//     }
-
-//     Serial.print(service);
-//     Serial.print(':');
-//     Serial.print(instance);
-//     Serial.print(':');
-//     Serial.print(subservice);
-//     Serial.print(' ');
-//     Serial.println(value);
-//   }
-
-//   return 0;
-// }
-
-// uint8_t nextMode = 0;
-// uint32_t nextTime = 0;
-
 void processCommand(char * buffer, uint8_t length) {
   bool newLine = true;
   if (command_id.equals(buffer, length)) {
@@ -479,13 +285,6 @@ void loop() {
     lineReader.getLine(buffer, length);
     processCommand(buffer, length);
   }
-
-  // if (nextTime == 0 || now >= nextTime) {
-  //   nextMode += 5;
-  //   nextMode %= 3;
-  //   directedChannels[0].setState(nextMode);
-  //   nextTime = now + 10000;
-  // }
 }
 
 
