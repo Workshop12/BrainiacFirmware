@@ -1,6 +1,9 @@
 #include "RelayChannel.h"
 
-RelayInterface::RelayInterface() : mTimeout(0), mOffTime(0), mState(0) {
+RelayInterface::RelayInterface(bool addPollable) : Pollable(addPollable), mTimeout(0), mOffTime(0), mState(0) {
+}
+
+RelayInterface::~RelayInterface() {
 }
 
 void RelayInterface::setOffTime() {
@@ -52,7 +55,7 @@ void RelayInterface::showSet(uint8_t index) {
   Serial.println(mTimeout);
 }
 
-RelayChannel::RelayChannel() : mPowerPin(-1) {
+RelayChannel::RelayChannel(bool addPollable) : RelayInterface(addPollable), mPowerPin(-1) {
 }
 
 void RelayChannel::setPin(int8_t powerPin) {
@@ -65,7 +68,6 @@ void RelayChannel::setPin(int8_t powerPin) {
 }
 
 RelayChannel::~RelayChannel() {
-  releasePin();
 }
 
 void RelayChannel::releasePin() {
