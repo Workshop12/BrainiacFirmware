@@ -2,30 +2,6 @@
 
 #include <avr/pgmspace.h>
 
-const char _command_id[] PROGMEM = "id";
-const PStr command_id(_command_id);
-
-const char _command_enum[] PROGMEM = "enum";
-const PStr command_enum(_command_enum);
-
-const char _command_ser[] PROGMEM = "ser";
-const PStr command_ser(_command_ser);
-
-const char _command_set[] PROGMEM = "set";
-const PStr command_set(_command_set);
-
-const char _error_pollables[] PROGMEM = "ERROR: Too many pollables for the given array size";
-const PStr error_pollables(_error_pollables);
-
-const char _string_prompt[] PROGMEM = "$ ";
-const PStr string_prompt(_string_prompt);
-
-const char _product_details[] PROGMEM = "4x4 relay 1.0.0.0 ";
-const PStr product_details(_product_details);
-
-const char _error_serUsage[] PROGMEM = "Usage: ser <serialNumber> - where serialNumber is 16 hex chars";
-const PStr error_serUsage(_error_serUsage);
-
 PStr::PStr(const char * buffer) {
   mBuffer = buffer;
 }
