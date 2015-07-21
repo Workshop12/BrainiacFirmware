@@ -21,16 +21,4 @@ class PStr {
     const char * mBuffer;
 };
 
-extern const PStr string_prompt;
-
-extern const PStr error_pollables;
-extern const PStr error_serUsage;
-
-extern const PStr command_enum;
-extern const PStr command_id;
-extern const PStr command_ser;
-extern const PStr command_set;
-
-extern const PStr product_details;
-
 #endif
