@@ -4,8 +4,7 @@
 
 #define STATE_CHANGE_DELAY_MS 30
 
-PolarisedChannel::PolarisedChannel() {
-
+PolarisedChannel::PolarisedChannel() : mPowerChannel(false), mDirectionChannel(false) {
 }
 
 PolarisedChannel::~PolarisedChannel() {
