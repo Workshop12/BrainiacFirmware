@@ -1,11 +1,12 @@
+#include <Blinky.h>
+#include <LineReader.h>
+#include <Pollable.h>
+#include <SerialNumber.h>
+#include <Strings.h>
+
 #include "global.h"
 
 #include "StatementParser.h"
-#include "LineReader.h"
-#include "Blinky.h"
-
-#include "Strings.h"
-#include "SerialNumber.h"
 
 Blinky blinky(13, 500);
 LineReader lineReader;

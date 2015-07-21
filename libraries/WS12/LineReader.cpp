@@ -1,11 +1,11 @@
 #include "LineReader.h"
 
-LineReader::LineReader() : mBufferOffset(0), mLineReady(0) {
+#include "Pollable.h"
 
+LineReader::LineReader() : mBufferOffset(0), mLineReady(0) {
 }
 
 LineReader::~LineReader() {
-
 }
 
 void LineReader::poll(uint32_t now) {

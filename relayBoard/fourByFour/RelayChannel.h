@@ -1,7 +1,7 @@
 #ifndef _RELAY_CHANNEL_H
 #define _RELAY_CHANNEL_H
 
-#include "Pollable.h"
+#include <Pollable.h>
 
 class RelayInterface : public Pollable {
   public:
