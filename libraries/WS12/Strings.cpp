@@ -6,15 +6,15 @@ PStr::PStr(const char * buffer) {
   mBuffer = buffer;
 }
 
-char PStr::operator[](uint8_t i) const {
+char PStr::operator[](uint16_t i) const {
   return pgm_read_byte_near(mBuffer + i);
 }
 
-char PStr::operator[](uint8_t i) {
+char PStr::operator[](uint16_t i) {
   return pgm_read_byte_near(mBuffer + i);
 }
 
-char PStr::charAt(uint8_t i) const {
+char PStr::charAt(uint16_t i) const {
   return pgm_read_byte_near(mBuffer + i);
 }
 
@@ -60,7 +60,7 @@ bool PStr::begins(char * buffer, uint8_t length) const {
 }
 
 void PStr::print() const {
-  for (uint8_t i = 0; ; ++i) {
+  for (uint16_t i = 0; ; ++i) {
     char next = charAt(i);
     if (next == 0) {
       return;
