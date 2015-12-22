@@ -120,16 +120,16 @@ void W12Serial::setSerialMode(uint8_t serialMode) {
             mTX.write(0);
 
             mRX.setDirection(false);
-            mRX.write(0);
+            // mRX.write(0);
 
             *mUcsrb = (1 << RXEN);
 
         } else if (serialMode == 1) {
             // Enable the transmitter.
-            *mUcsrb = (1 << TXEN);
+            *mUcsrb = (1 << TXEN) | (1 << RXEN);
 
             // Make TX an output pin.
-            mTX.write(1);
+            // mTX.write(1);
             mTX.setDirection(true);
         } else if (serialMode == 2) {
             *mUcsrb = (1 << RXEN) | (1 << TXEN);
@@ -171,9 +171,9 @@ void W12Serial::poll(uint32_t now) {
         uint8_t toWrite;
         mWriteBuffer.read(toWrite);
         *mUdr = toWrite;
-        if (mIsSingleWire) {
-            mSerialSkip++;
-        }
+        // if (mIsSingleWire) {
+        //     mSerialSkip++;
+        // }
     }
 
     if (mSerialMode == 1 && mWriteBuffer.size()==0 && (*mUcsra & (1<<UDRE))) {
