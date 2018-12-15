@@ -16,29 +16,34 @@ RelayChannel switchChannels[SWITCH_CHANNEL_COUNT];
 PolarisedChannel directedChannels[DIRECTED_CHANNEL_COUNT];
 
 void doId() {
+  WS12::commandId.print();
+  Serial.print(' ');
   product_details.print();
   SerialNumber::print();
+  Serial.print('\n');
 }
 
 void doEnum() {
+  command_enum.print();
+  Serial.print(' ');
   Serial.print('s');
   Serial.print(':');
   Serial.print(SWITCH_CHANNEL_COUNT);
-  Serial.print(',');
   Serial.print(' ');
   Serial.print('d');
   Serial.print(':');
   Serial.print(DIRECTED_CHANNEL_COUNT);
+  Serial.print('\n');
 }
 
-void doSet(char * command, int length) {
-  for (uint8_t i = 0; i < SWITCH_CHANNEL_COUNT; ++i) {
-    switchChannels[i].showSet(i);
-  }
-  for (uint8_t i = 0; i < DIRECTED_CHANNEL_COUNT; ++i) {
-    directedChannels[i].showSet(i);
-  }
-}
+// void doSet(char * command, int length) {
+//   for (uint8_t i = 0; i < SWITCH_CHANNEL_COUNT; ++i) {
+//     switchChannels[i].showSet(i);
+//   }
+//   for (uint8_t i = 0; i < DIRECTED_CHANNEL_COUNT; ++i) {
+//     directedChannels[i].showSet(i);
+//   }
+// }
 
 void doSer(char * command, int length) {
   if (length != 20) {
@@ -49,22 +54,30 @@ void doSer(char * command, int length) {
   }
 }
 
+uint8_t safePin(uint8_t & nextPin) {
+  uint8_t toReturn = nextPin;
+  ++nextPin;
+  if (toReturn == 13) { // blinky is on 13
+    return safePin(nextPin);
+  }
+  return toReturn;
+}
 
 void setup() {
   Serial.begin(9600);
 
-  directedChannels[0].setPins(4, 5);
-  directedChannels[1].setPins(6, 7);
-  directedChannels[2].setPins(8, 9);
-  directedChannels[3].setPins(10, 11);
+  uint8_t nextPin = 2;
 
-  switchChannels[0].setPin(12); 
-  switchChannels[1].setPin(14); // Blinky is on 13.
-  switchChannels[2].setPin(15);
-  switchChannels[3].setPin(16);
+  for (uint8_t i=0; i < SWITCH_CHANNEL_COUNT; ++i) {
+    switchChannels[i].setPin(safePin(nextPin));
+  }
 
-  for (uint8_t i = 0; i < 5; ++i) {
-    WS12::stringPrompt.println();
+  for (uint8_t i=0; i < DIRECTED_CHANNEL_COUNT; ++i) {
+    directedChannels[i].setPins(safePin(nextPin),safePin(nextPin));
+  }
+
+  for (uint8_t i = 0; i < 2; ++i) {
+    doId();
   }
 }
 
@@ -78,25 +91,32 @@ void processCommand(char * buffer, uint8_t length) {
     doEnum();
   } else if (WS12::commandSer.begins(buffer, length)) {
     doSer(buffer, length);
-  } else if (command_set.begins(buffer, length)) {
-    doSet(buffer, length);
-    newLine = false;
+    Serial.print('\n');
+  // } else if (command_set.begins(buffer, length)) {
+  //   doSet(buffer, length);
+  //   newLine = false;
   } else if (length > 2 && buffer[1] == ':' && (buffer[0] == 's' || buffer[0] == 'd' || buffer[0] == 'p')) {
+    Serial.print(buffer[0]);
+    Serial.print(' ');
     if (statementParser.doStatement(buffer, length)) {
-      Serial.print("OK");
+      Serial.print("OK\n");
     } else {
-      Serial.print("FAIL");
+      Serial.print("FAIL\n");
     }
   } else if (length == 0) {
     // do nothing.
     newLine = false;
   } else {
-    Serial.print("???");
+    for (uint8_t i = 0; i < length && (i==0 || (buffer[i] != ' ' && buffer[i] != ':')); ++i) {
+      Serial.print(buffer[i]);
+    }
+    Serial.print(' ');
+    Serial.print('?');
+    Serial.print('\n');;
   }
-  if (newLine) {
-    Serial.println();
-  }
-  WS12::stringPrompt.print();
+  // if (newLine) {
+  //   Serial.println();
+  // }
 }
 
 void loop() {

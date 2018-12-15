@@ -3,8 +3,8 @@
 
 #include <Arduino.h>
 
-#define SWITCH_CHANNEL_COUNT (4)
-#define DIRECTED_CHANNEL_COUNT (4)
+#define SWITCH_CHANNEL_COUNT (8)
+#define DIRECTED_CHANNEL_COUNT (0)
 #define PWM_CHANNEL_COUNT (0)
 
 #include "RelayChannel.h"

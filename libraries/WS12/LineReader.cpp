@@ -15,7 +15,6 @@ void LineReader::poll(uint32_t now) {
   }
   while (Serial.available()) {
     uint8_t newChar = Serial.read();
-    Serial.print((char)newChar);
     if (newChar == 10) {
       mLineReady = 1;
       break;
