@@ -62,7 +62,7 @@ void RelayChannel::setPin(int8_t powerPin) {
   releasePin();
   mPowerPin = powerPin;
   if (mPowerPin >= 0) {
-    digitalWrite(mPowerPin, 0);
+    setState(false);
     pinMode(mPowerPin, OUTPUT);
   }
 }
@@ -72,16 +72,14 @@ RelayChannel::~RelayChannel() {
 
 void RelayChannel::releasePin() {
   if (mPowerPin >= 0) {
-    digitalWrite(mPowerPin, 0);
+    setState(0);
     pinMode(mPowerPin, INPUT);
   }
 }
 
 uint8_t RelayChannel::setState(uint8_t state) {
-  if (state != mState) {
-    digitalWrite(mPowerPin, state != 0);
-    mState = state != 0;
-  }
+  digitalWrite(mPowerPin, state == 0); // TODO: This is inverted - for the "8 Relay Module" - LC-202.
+  mState = state != 0;
   setOffTime();
   return mState;
 }
