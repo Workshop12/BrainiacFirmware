@@ -43,16 +43,10 @@ void RelayInterface::showSet(uint8_t index) {
   Serial.print(getType());
   Serial.print(':');
   Serial.print(index);
-  Serial.print(' ');
-  Serial.println(mState);
-
-  Serial.print(getType());
-  Serial.print(':');
-  Serial.print(index);
-  Serial.print(':');
-  Serial.print('t');
-  Serial.print(' ');
-  Serial.println(mTimeout);
+  Serial.print('=');
+  Serial.print(mState);
+  Serial.print(",t:");
+  Serial.print(mTimeout);
 }
 
 RelayChannel::RelayChannel(bool addPollable) : RelayInterface(addPollable), mPowerPin(-1) {

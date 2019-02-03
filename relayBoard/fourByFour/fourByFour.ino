@@ -36,14 +36,25 @@ void doEnum() {
   Serial.print('\n');
 }
 
-// void doSet(char * command, int length) {
-//   for (uint8_t i = 0; i < SWITCH_CHANNEL_COUNT; ++i) {
-//     switchChannels[i].showSet(i);
-//   }
-//   for (uint8_t i = 0; i < DIRECTED_CHANNEL_COUNT; ++i) {
-//     directedChannels[i].showSet(i);
-//   }
-// }
+void doSet(char * command, int length) {
+  bool any = false;
+  Serial.print("set ");
+  for (uint8_t i = 0; i < SWITCH_CHANNEL_COUNT; ++i) {
+    if (any) {
+      Serial.print(' ');
+    }
+    switchChannels[i].showSet(i);
+    any = true;
+  }
+  for (uint8_t i = 0; i < DIRECTED_CHANNEL_COUNT; ++i) {
+    if (any) {
+      Serial.print(' ');
+    }
+    directedChannels[i].showSet(i);
+    any = true;
+  }
+  Serial.println();
+}
 
 void doSer(char * command, int length) {
   if (length != 20) {
@@ -64,7 +75,7 @@ uint8_t safePin(uint8_t & nextPin) {
 }
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   uint8_t nextPin = 2;
 
@@ -92,9 +103,8 @@ void processCommand(char * buffer, uint8_t length) {
   } else if (WS12::commandSer.begins(buffer, length)) {
     doSer(buffer, length);
     Serial.print('\n');
-  // } else if (command_set.begins(buffer, length)) {
-  //   doSet(buffer, length);
-  //   newLine = false;
+  } else if (command_set.begins(buffer, length)) {
+    doSet(buffer, length);
   } else if (length > 2 && buffer[1] == ':' && (buffer[0] == 's' || buffer[0] == 'd' || buffer[0] == 'p')) {
     Serial.print(buffer[0]);
     Serial.print(' ');
@@ -114,9 +124,6 @@ void processCommand(char * buffer, uint8_t length) {
     Serial.print('?');
     Serial.print('\n');;
   }
-  // if (newLine) {
-  //   Serial.println();
-  // }
 }
 
 void loop() {
