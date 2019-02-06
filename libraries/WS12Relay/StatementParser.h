@@ -3,11 +3,9 @@
 
 #include <Arduino.h>
 
-#include "global.h"
-
 class StatementParser {
   public:
-    StatementParser();
+    StatementParser(class RelayChannel * switchChannels, uint8_t switchChannelCount, class PolarisedChannel * polarisedChannels, uint8_t polarisedChannelCount);
     bool doStatement(char * buffer, uint8_t length);
 
   private:
@@ -32,7 +30,12 @@ class StatementParser {
     uint8_t mInstance;
     uint32_t mValue;
 
-    RelayInterface * mToUse;
+    class RelayInterface * mToUse;
+
+    class RelayChannel * mSwitchChannels;
+    uint8_t mSwitchChannelCount;
+    class PolarisedChannel * mPolarisedChannels;
+    uint8_t mPolarisedChannelCount;
 };
 
 #endif

@@ -1,7 +1,10 @@
 #include "StatementParser.h"
 
-StatementParser::StatementParser() {
+#include "RelayChannel.h"
+#include "PolarisedChannel.h"
 
+StatementParser::StatementParser(class RelayChannel * switchChannels, uint8_t switchChannelCount, class PolarisedChannel * polarisedChannels, uint8_t polarisedChannelCount) :
+  mSwitchChannels(switchChannels), mSwitchChannelCount(switchChannelCount), mPolarisedChannels(polarisedChannels), mPolarisedChannelCount(polarisedChannelCount) {
 }
 
 bool StatementParser::doStatement(char * buffer, uint8_t length) {
@@ -35,19 +38,19 @@ bool StatementParser::readInstance() {
   if (mOffset < mLength) {
     mInstance = mBuffer[mOffset++] - '0';
 
-    if (mService == 's' && mInstance >= SWITCH_CHANNEL_COUNT) {
+    if (mService == 's' && mInstance >= mSwitchChannelCount) {
       return false;
     }
-    if (mService == 'd' && mInstance >= DIRECTED_CHANNEL_COUNT) {
+    if (mService == 'd' && mInstance >= mPolarisedChannelCount) {
       return false;
     }
 
     switch (mService) {
       case 's':
-        mToUse = &switchChannels[mInstance];
+        mToUse = &mSwitchChannels[mInstance];
         break;
       case 'd':
-        mToUse = &directedChannels[mInstance];
+        mToUse = &mPolarisedChannels[mInstance];
         break;
       default:
         return false;

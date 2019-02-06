@@ -17,5 +17,5 @@ class Blinky : public Pollable {
     uint32_t mNextTransition;
 };
 
-#endif _BLINKY_H
+#endif // _BLINKY_H
 
