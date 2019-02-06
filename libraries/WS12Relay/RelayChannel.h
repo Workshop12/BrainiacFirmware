@@ -38,6 +38,8 @@ class RelayChannel : public RelayInterface {
     virtual uint8_t setState(uint8_t state);
 
   protected:
+    static uint8_t invertedCheck();
+
     virtual char getType();
 
     int8_t mPowerPin;

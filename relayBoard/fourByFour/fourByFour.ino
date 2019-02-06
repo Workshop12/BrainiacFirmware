@@ -13,6 +13,10 @@
 const char _productDetails[] PROGMEM = "lc202 relay 1.0.0.0 ";
 const PStr productDetails(_productDetails);
 
+uint8_t RelayChannel::invertedCheck() {
+  return 0;
+}
+
 RelayChannel switchChannels[8];
 
 RelayController relayController(productDetails, switchChannels, 8, NULL, 0);
