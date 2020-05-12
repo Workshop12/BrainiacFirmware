@@ -1,7 +1,6 @@
 #ifndef _RELAY_CONTROLLER_H
 #define _RELAY_CONTROLLER_H
 
-#include <Blinky.h>
 #include <LineReader.h>
 #include <StatementParser.h>
 #include <Strings.h>
@@ -11,9 +10,11 @@ public:
     RelayController(const PStr & productId, RelayChannel * switchChannels, uint8_t switchChannelCount, PolarisedChannel * polarisedChannels, uint8_t polarisedChannelCount);
     void setup();
     void loop();
+
+    uint8_t pinMap(uint8_t index);
+
 private:
     LineReader mLineReader;
-    Blinky mBlinky;
     StatementParser mStatementParser;
     const PStr & mProductId;
 

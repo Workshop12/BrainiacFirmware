@@ -7,7 +7,6 @@
 
 RelayController::RelayController(const PStr & productId, RelayChannel * relayChannels, uint8_t relayChannelCount, PolarisedChannel * polarisedChannels, uint8_t polarisedChannelCount) :
   mProductId(productId),
-  mBlinky(13,500), 
   mSwitchChannels(relayChannels),
   mSwitchChannelCount(relayChannelCount),
   mPolarisedChannels(polarisedChannels),
@@ -78,14 +77,14 @@ uint8_t RelayController::safePin(uint8_t & nextPin) {
 void RelayController::setup() {
   Serial.begin(115200);
 
-  uint8_t nextPin = 2;
+  uint8_t pinIndex = 0;
 
   for (uint8_t i=0; i < mSwitchChannelCount; ++i) {
-    mSwitchChannels[i].setPin(safePin(nextPin));
+    mSwitchChannels[i].setPin(pinMap(pinIndex++));
   }
 
   for (uint8_t i=0; i < mPolarisedChannelCount; ++i) {
-    mPolarisedChannels[i].setPins(safePin(nextPin),safePin(nextPin));
+    mPolarisedChannels[i].setPins(pinMap(pinIndex++),pinMap(pinIndex++));
   }
 
   for (uint8_t i = 0; i < 2; ++i) {
