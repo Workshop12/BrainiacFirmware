@@ -26,6 +26,12 @@ void RelayInterface::poll(uint32_t now) {
 }
 
 void RelayInterface::setTimeout(uint32_t timeout) {
+  // Temporary workaround to extend time. This will set the timeout to always be 500ms
+  // if any non zero value came from the host. 
+  if (timeout > 0) {
+    timeout = 500; 
+  }
+
   mTimeout = timeout;
 
   if (timeout == 0) {
